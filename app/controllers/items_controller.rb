@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
 	expose(:incomplete_items) { Item.where("completed = ? OR completed IS NULL", false)}
 
 	expose(:completed_items) { Item.where(completed: true)}
-	
+
 	def index 
 	end
 
@@ -12,7 +12,7 @@ class ItemsController < ApplicationController
 	end
 
 	def create
-		if @item.save
+		if item.save
 		redirect_to(items_path)
 
 	    else 
@@ -32,5 +32,11 @@ class ItemsController < ApplicationController
 	def destroy
 		item.destroy
 		redirect_to items_path
+	end
+
+	private
+
+	def item_params
+	  params.require{:item}.permit(:item_type_id, :name)
 	end
 end 
