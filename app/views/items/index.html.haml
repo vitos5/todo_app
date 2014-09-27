@@ -1,0 +1,29 @@
+
+.container-fluid
+  %p= link_to("Create item", new_item_path, class: 'btn btn-default')
+
+  %hr
+
+= image_tag('https://media.licdn.com/mpr/mpr/shrink_120_120/p/5/005/077/361/3c00e53.jpg')
+
+%table.table.table-striped
+  - incomplete_items.each do |item|
+    %tr
+      %td= item.item_type.name
+      %td= item.name
+      %td
+        = link_to('Complete', complete_item_path(item), method: :post, class: 'btn btn-success btn-sm')
+        = link_to('Delete', { action: :destroy, id: item.id}, method: :delete, class: 'btn btn-danger')
+%br/
+%br/
+%h1 Completed Items
+%table.table.table-striped#completed-table
+  - completed_items.each do |item|
+    %tr
+      %th Type
+      %th Name
+      %th Completed at
+    %tr
+      %td= item.item_type.name
+      %td= item.name
+      %td= item.completed_at.strftime("%b %d, %Y %H:%M")
